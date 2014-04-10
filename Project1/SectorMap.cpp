@@ -18,6 +18,7 @@ SectorMap::~SectorMap(){
 
 }
 
+
 char SectorMap::getSymbol(){
 	return m_Symbol.getSymbol();
 }

@@ -69,7 +69,7 @@ void WorldMap::viewMapNoInput(){
 		for (i = 1; (i <= DYM_X) && (i <= x); i++){
 			color_set((map[(n * i) - 1]).getColor(), NULL);
 			addch((map[(n * i) - 1]).getSymbol());
-				color_set(COLOR_WHITE, NULL);
+			color_set(COLOR_WHITE, NULL);
 		}
 		printw("\n");
 
