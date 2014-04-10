@@ -1,0 +1,111 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="PDcurses">
+      <UniqueIdentifier>{a81efff0-e0d7-4d58-9e2e-96317f4e059b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="PDcurses\PDcursesLib">
+      <UniqueIdentifier>{6d784266-229a-400a-b237-ec4c050fff82}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\curses">
+      <UniqueIdentifier>{a4d1192e-df90-4240-ad78-4a3ad8b740ca}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Maps">
+      <UniqueIdentifier>{08c42662-9b45-4677-8145-f5c78be31928}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\map">
+      <UniqueIdentifier>{8424e05a-d5c2-4331-a48c-3e37cd2317d1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\spitballing %28DONT USE%29">
+      <UniqueIdentifier>{d1c1743a-630a-4feb-8bb6-a902ccb1aed9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Items">
+      <UniqueIdentifier>{84d937de-7543-4eb7-bbea-2a1de35c0be2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Items\Defualt items">
+      <UniqueIdentifier>{f9ad7d84-14ce-4135-820c-2ee15b2fbfc8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Actors">
+      <UniqueIdentifier>{94a6d1fe-45e8-45cb-a6c7-914a760c5175}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Actors\Human">
+      <UniqueIdentifier>{628bc683-ec04-4705-ad76-03b7c47d294d}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="getInput.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="PDcurses\config.h">
+      <Filter>Header Files\curses</Filter>
+    </ClInclude>
+    <ClInclude Include="PDcurses\curses.h">
+      <Filter>Header Files\curses</Filter>
+    </ClInclude>
+    <ClInclude Include="PDcurses\curspriv.h">
+      <Filter>Header Files\curses</Filter>
+    </ClInclude>
+    <ClInclude Include="PDcurses\panel.h">
+      <Filter>Header Files\curses</Filter>
+    </ClInclude>
+    <ClInclude Include="PDcurses\term.h">
+      <Filter>Header Files\curses</Filter>
+    </ClInclude>
+    <ClInclude Include="SectorMap.h">
+      <Filter>Header Files\Maps</Filter>
+    </ClInclude>
+    <ClInclude Include="Square.h">
+      <Filter>Header Files\Maps</Filter>
+    </ClInclude>
+    <ClInclude Include="Gun.h">
+      <Filter>Header Files\spitballing %28DONT USE%29</Filter>
+    </ClInclude>
+    <ClInclude Include="Clock.h">
+      <Filter>Header Files\spitballing %28DONT USE%29</Filter>
+    </ClInclude>
+    <ClInclude Include="Item.h">
+      <Filter>Header Files\Items</Filter>
+    </ClInclude>
+    <ClInclude Include="Actor.h">
+      <Filter>Header Files\Actors</Filter>
+    </ClInclude>
+    <ClInclude Include="Human.h">
+      <Filter>Header Files\Actors\Human</Filter>
+    </ClInclude>
+    <ClInclude Include="Player.h">
+      <Filter>Header Files\Actors\Human</Filter>
+    </ClInclude>
+    <ClInclude Include="Symbol.h">
+      <Filter>Header Files\Maps</Filter>
+    </ClInclude>
+    <ClInclude Include="WorldMap.h">
+      <Filter>Header Files\Maps</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="WorldMap.cpp">
+      <Filter>Source Files\map</Filter>
+    </ClCompile>
+    <ClCompile Include="SectorMap.cpp">
+      <Filter>Source Files\map</Filter>
+    </ClCompile>
+    <ClCompile Include="Symbol.cpp">
+      <Filter>Source Files\map</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>
