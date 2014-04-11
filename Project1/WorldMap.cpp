@@ -56,7 +56,8 @@ void WorldMap::makeMap(int newX, int newY){
 
 void WorldMap::TrickelDown(int connX, int connY, int distance, int orgHeight){
 	
-	vector<int> valids;
+	vector<int> validsX;
+	vector<int> validsY;
 
 	/*
 	701
@@ -65,43 +66,51 @@ void WorldMap::TrickelDown(int connX, int connY, int distance, int orgHeight){
 	*/
 	
 
-	if (
-		((connY + 1) < y) 
-		&& 
-		((map[(connX + 0)*(connY + 1)]).getHeight() < (orgHeight - 1))
-		)
-	{
-		valids.push_back((connX + 0)*(connY + 1));
+	if (((connY + 1) < y) && ((map[(connX + 0)*(connY + 1)]).getHeight() < (orgHeight - 1))){
+		validsX.push_back((connX + 0));
+		validsY.push_back((connY + 1));
 	}
 	if ((((connY + 1) < y) && ((connX + 1) < x)) && ((map[(connX + 1)*(connY + 1)]).getHeight() < (orgHeight - 1))){
-		valids.push_back((connX + 1)*(connY + 1));
+		validsX.push_back((connX + 1));
+		validsY.push_back((connY + 1));
 	}
 	if (((connX + 1) < x) && ((map[(connX + 1)*(connY + 0)]).getHeight() < (orgHeight - 1))){
-		valids.push_back((connX + 1)*(connY + 0));
+		validsX.push_back((connX + 1));
+		validsY.push_back((connY + 0));
 	}
 	if ((((connY - 1) >= 0) && ((connX + 1) <=x)) && ((map[(connX + 1)*(connY - 1)]).getHeight() < (orgHeight - 1))){
-		valids.push_back((connX + 1)*(connY - 1));
+		validsX.push_back((connX + 1));
+		validsY.push_back((connY - 1));
 	}
 	if ((((connY - 1) >= 0) && (map[(connX + 0)*(connY - 1)]).getHeight() < (orgHeight - 1))){
-		valids.push_back((connX + 0)*(connY - 1));
+		validsX.push_back((connX + 0));
+		validsY.push_back((connY - 1));
 	}
 	if ((((connY - 1) >= 0) && ((connX - 1) >= 0)) && (map[(connX - 1)*(connY - 1)]).getHeight() < (orgHeight - 1)){
-		valids.push_back((connX - 1)*(connY - 1));
+		validsX.push_back((connX - 1));
+		validsY.push_back((connY - 1));
 	}
 	if ((((connX - 1) >= 0) && (map[(connX - 1)*(connY + 0)]).getHeight() < (orgHeight - 1))){
-		valids.push_back((connX - 1)*(connY + 0));
+		validsX.push_back((connX - 1));
+		validsY.push_back((connY + 0));
 	}
 	if ((((connY + 1) < y) && ((connX - 1) >= 0)) && (map[(connX - 1)*(connY + 1)]).getHeight() < (orgHeight - 1)){
-		valids.push_back((connX - 1)*(connY + 1));
+		validsX.push_back((connX - 1));
+		validsY.push_back((connY + 1));
 	}
 
 
 	
-	if (valids.size() > 0){
-		int scatter = rand() % valids.size();  //0-7
-		(map[(valids[scatter])]).setHeight((map[(valids[scatter])]).getHeight() + 1);
+	if (validsX.size() > 0){
+		int scatter = rand() % validsX.size();  //0-7
+		int randXpos = validsX[scatter];
+		int randYpos = validsY[scatter];
+		int newHeight = (map[randXpos*randYpos]).getHeight() + 1;
+		(map[randXpos*randYpos]).setHeight(newHeight);
 		(map[connX*connY]).setHeight(orgHeight);
-
+		if (distance <= HEIGHT_CHECK_DISTANCE){
+			TrickelDown(randXpos, randYpos, distance + 1, newHeight - 1);
+		}
 	}
 	
 
