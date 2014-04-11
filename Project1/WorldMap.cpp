@@ -43,6 +43,7 @@ void WorldMap::makeMap(int newX, int newY){
 	for (int i = 0; i <= ((x*y) / HEIGHT_MAX_POINTS); i++){
 		int locationX = rand() % (x);
 		int locationY = rand() % (y);
+		cout << "i chose " << locationX << ", " << locationY << endl;
 		int newHeight = (map[locationX*locationY]).getHeight() + 1;
 		(map[locationX*locationY]).setHeight(newHeight);
 		TrickelDown(locationX, locationY, 0, newHeight - 1);

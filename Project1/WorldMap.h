@@ -17,6 +17,7 @@ class WorldMap {
 public:
 	int getXPos();
 	int getYPos();
+	// vector<vector<SectorMap>> getMapVector();
 	vector<SectorMap> getMapVector();
 	void makeMap(int newX, int newY);
 	void viewMap();
@@ -37,8 +38,8 @@ private:
 	void TreeRec(int indI, int indN, int startDist);
 	int x;
 	int y;
+	// vector<vector<SectorMap>> map;
 	vector<SectorMap> map;
-	// vector<SectorMap> map;
 };
 
 
