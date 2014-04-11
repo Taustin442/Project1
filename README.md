@@ -1,3 +1,3 @@
 Project1
 ========
-Can my laptop work?
+yes it can. and so can my pc?
