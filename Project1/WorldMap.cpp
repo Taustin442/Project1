@@ -35,14 +35,190 @@ void WorldMap::makeMap(int newX, int newY){
 	for (n = 1; n <= y; n++){
 		for (i = 1; i <= x; i++){
 			// CURRENTLY WORKING HEREEEEEE!!!!!
-			int height = rand() % 100 + 1;
-			temp = SectorMap('P', COLOR_YELLOW, height);
+			temp = SectorMap('P', COLOR_YELLOW, 0);
 			map.push_back(temp);
 			cout << (map[(n * i) - 1]).getColor() << " " << (map[(n * i) - 1]).getSymbol() << "n: " << n << "i: " << i << endl;
 		}
 	}
-	SpawnBioCenters();
+	for (int i = 0; i <= ((x*y) / HEIGHT_MAX_POINTS); i++){
+		int locationX = rand() % (x);
+		int locationY = rand() % (y);
+		int newHeight = (map[locationX*locationY]).getHeight() + 1;
+		(map[locationX*locationY]).setHeight(newHeight);
+		TrickelDown(locationX, locationY, 0, newHeight - 1);
+		clear();
+		viewHeightMapNoInput();
+
+	}
+	viewHeightMap();
+	//SpawnBioCenters();
 }
+
+void WorldMap::TrickelDown(int connX, int connY, int distance, int orgHeight){
+	
+	vector<int> valids;
+
+	/*
+	701
+	6x2	
+	543
+	*/
+	
+
+	if (
+		((connY + 1) < y) 
+		&& 
+		((map[(connX + 0)*(connY + 1)]).getHeight() < (orgHeight - 1))
+		)
+	{
+		valids.push_back((connX + 0)*(connY + 1));
+	}
+	if ((((connY + 1) < y) && ((connX + 1) < x)) && ((map[(connX + 1)*(connY + 1)]).getHeight() < (orgHeight - 1))){
+		valids.push_back((connX + 1)*(connY + 1));
+	}
+	if (((connX + 1) < x) && ((map[(connX + 1)*(connY + 0)]).getHeight() < (orgHeight - 1))){
+		valids.push_back((connX + 1)*(connY + 0));
+	}
+	if ((((connY - 1) >= 0) && ((connX + 1) <=x)) && ((map[(connX + 1)*(connY - 1)]).getHeight() < (orgHeight - 1))){
+		valids.push_back((connX + 1)*(connY - 1));
+	}
+	if ((((connY - 1) >= 0) && (map[(connX + 0)*(connY - 1)]).getHeight() < (orgHeight - 1))){
+		valids.push_back((connX + 0)*(connY - 1));
+	}
+	if ((((connY - 1) >= 0) && ((connX - 1) >= 0)) && (map[(connX - 1)*(connY - 1)]).getHeight() < (orgHeight - 1)){
+		valids.push_back((connX - 1)*(connY - 1));
+	}
+	if ((((connX - 1) >= 0) && (map[(connX - 1)*(connY + 0)]).getHeight() < (orgHeight - 1))){
+		valids.push_back((connX - 1)*(connY + 0));
+	}
+	if ((((connY + 1) < y) && ((connX - 1) >= 0)) && (map[(connX - 1)*(connY + 1)]).getHeight() < (orgHeight - 1)){
+		valids.push_back((connX - 1)*(connY + 1));
+	}
+
+
+	
+	if (valids.size() > 0){
+		int scatter = rand() % valids.size();  //0-7
+		(map[(valids[scatter])]).setHeight((map[(valids[scatter])]).getHeight() + 1);
+		(map[connX*connY]).setHeight(orgHeight);
+
+	}
+	
+
+}
+
+// displays the map to the console with either the dynamic or static methods
+void WorldMap::viewHeightMap() {
+	//checks if the map will fit in the console
+	if ((x <= DYM_X) && (y <= DYM_Y)){
+		viewHeightMapStatic();
+	}
+	else if (x > DYM_X && y > DYM_Y){
+		viewHeightMapDynamic(DYM_X, DYM_Y);
+	}
+	else if (x > DYM_X){
+		viewHeightMapDynamic(DYM_X, y);
+	}
+	else{
+		viewHeightMapDynamic(x, DYM_Y);
+	}
+	clear();
+}
+
+void WorldMap::viewHeightMapNoInput(){
+	int n, i;
+	printw("This is your map\n");
+	for (n = 1; (n <= DYM_Y) && (n <= y); n++){
+		for (i = 1; (i <= DYM_X) && (i <= x); i++){
+			color_set((map[(n * i) - 1]).getColor(), NULL);
+			char output = (char)((map[(n * i) - 1]).getHeight() + 48);
+			addch(output);
+			color_set(COLOR_WHITE, NULL);
+		}
+		printw("\n");
+
+	}
+	// cout << "Trees " << CountTrees(&map, x, y) << endl;
+	// printw("press enter to continue");
+	refresh();
+}
+
+void WorldMap::viewHeightMapStatic() {
+	int n, i;
+	cout << "This is your map\n";
+	for (n = 1; n <= x; n++){
+		for (i = 1; i <= y; i++){
+			color_set((map[(n * i) - 1]).getColor(), NULL);
+			char output = (char)((map[(n * i) - 1]).getHeight() + 48);
+			addch(output);
+			color_set(COLOR_WHITE, NULL);
+		}
+		printw("\n");
+
+	}
+	// cout << "Trees " << CountTrees(&map, x, y) << endl;
+	printw("press enter to continue");
+	refresh();
+	getch();
+
+
+}
+
+void WorldMap::viewHeightMapDynamic(int finX, int finY) {
+	clear();
+	printw("This is your map\n");
+	int orgY = 1, orgX = 1;
+	if (finY > DYM_Y){
+		orgY = finY - (DYM_Y - 1);
+	}
+	if (finX > DYM_X){
+		orgX = finX - (DYM_X - 1);
+	}
+
+	for (int n = orgY; n <= finY; n++){
+		for (int i = orgX; i <= finX; i++){
+			color_set((map[(n * i) - 1]).getColor(), NULL);
+			char output = (char)((map[(n * i) - 1]).getHeight() + 48);
+			addch(output);
+			color_set(COLOR_WHITE, NULL);
+		}
+		printw("\n");
+	}
+	// cout << "Trees " << CountTrees(&map, x, y) << endl;
+
+	printw("Use arrow keys to navigate. Press any other key to exit");
+	refresh();
+	int keyInput = getch();
+	if (keyInput == KEY_UP){
+		if (finY - DYM_Y > 0)
+			viewHeightMapDynamic(finX, finY - 1);
+		else
+			viewHeightMapDynamic(finX, finY);
+	}
+	else if (keyInput == KEY_DOWN){
+		if (finY + 1 <= y)
+			viewHeightMapDynamic(finX, finY + 1);
+		else
+			viewHeightMapDynamic(finX, finY);
+	}
+	else if (keyInput == KEY_RIGHT){
+		if (finX + 1 <= x)
+			viewHeightMapDynamic(finX + 1, finY);
+		else
+			viewHeightMapDynamic(finX, finY);
+	}
+	else if (keyInput == KEY_LEFT){
+		if (finX - DYM_X > 0)
+			viewHeightMapDynamic(finX - 1, finY);
+		else
+			viewHeightMapDynamic(finX, finY);
+	}
+
+}
+
+
+
+
 
 // displays the map to the console with either the dynamic or static methods
 void WorldMap::viewMap() {
