@@ -93,6 +93,9 @@
     <ClInclude Include="WorldMap.h">
       <Filter>Header Files\Maps</Filter>
     </ClInclude>
+    <ClInclude Include="Wound.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">

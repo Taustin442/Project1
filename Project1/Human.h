@@ -5,6 +5,8 @@ public:
 	Human();
 
 private:
+	//
+
 	//attributes
 	int m_Strength;
 	int m_Agility;
