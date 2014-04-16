@@ -37,16 +37,14 @@ void WorldMap::makeMap(int newX, int newY){
 		vector<SectorMap> tempVect;
 		map.push_back(tempVect);
 		for (i = 0; i <= x; i++){
-			// CURRENTLY WORKING HEREEEEEE!!!!!
 			tempSector = SectorMap('P', COLOR_YELLOW, 0);
 			(map[n]).push_back(tempSector);
 			cout << (map[n][i]).getColor() << " " << (map[n][i]).getSymbol() << " n: " << n << "i: " << i << endl;
 		}
-		// map.push_back(tempVect);
 	}
 	for (int i = 0; i <= ((x*y) * HEIGHT_MAX_POINTS); i++){
-		int locationX = rand() % (x);
-		int locationY = rand() % (y);
+		int locationX = rand() % (x+1);
+		int locationY = rand() % (y+1);
 		cout << "i chose " << locationX << ", " << locationY << endl;
 		int newHeight = (map[locationY][locationX]).getHeight() + 10;
 		(map[locationY][locationX]).setHeight(newHeight);
@@ -56,7 +54,7 @@ void WorldMap::makeMap(int newX, int newY){
 
 	}
 	viewHeightMap();
-	//SpawnBioCenters();
+	SpawnBioCenters();
 }
 
 void WorldMap::TrickelDown(int connX, int connY, int distance, int orgHeight){
@@ -297,11 +295,11 @@ void WorldMap::viewMapDynamic(int finX, int finY) {
 	clear();
 	printw("This is your map\n");
 	int orgY = 0, orgX = 0;
-	if (finY > DYM_Y){
-		orgY = finY - (DYM_Y - 1);
+	if (finY >= DYM_Y){
+		orgY = finY - (DYM_Y);
 	}
-	if (finX > DYM_X){
-		orgX = finX - (DYM_X - 1);
+	if (finX >= DYM_X){
+		orgX = finX - (DYM_X);
 	}
 
 	for (int n = orgY; n <= finY; n++){
@@ -318,7 +316,7 @@ void WorldMap::viewMapDynamic(int finX, int finY) {
 	refresh();
 	int keyInput = getch();
 	if (keyInput == KEY_UP){
-		if (finY - DYM_Y >= 0)
+		if (finY - DYM_Y > 0)
 			viewMapDynamic(finX, finY - 1);
 		else
 			viewMapDynamic(finX, finY);
@@ -336,7 +334,7 @@ void WorldMap::viewMapDynamic(int finX, int finY) {
 			viewMapDynamic(finX, finY);
 	}
 	else if (keyInput == KEY_LEFT){
-		if (finX - DYM_X >= 0)
+		if (finX - DYM_X > 0)
 			viewMapDynamic(finX - 1, finY);
 		else
 			viewMapDynamic(finX, finY);
@@ -346,9 +344,35 @@ void WorldMap::viewMapDynamic(int finX, int finY) {
 
 // intitiates verious biom spawns
 void WorldMap::SpawnBioCenters(){
+
+	for (int n = 0; n <= y; n++){
+		for (int i = 0; i <= x; i++){
+			if ((map[n][i]).getHeight() == 0){
+				(map[n][i]).setSymbol('~');
+				(map[n][i]).setColor(COLOR_BLUE);
+			}
+			else if ((map[n][i]).getHeight() >= 1 && (map[n][i]).getHeight() <= 20){
+				(map[n][i]).setSymbol('P');
+				(map[n][i]).setColor(COLOR_YELLOW);
+			}
+			else if ((map[n][i]).getHeight() >= 21 && (map[n][i]).getHeight() < 40){
+				(map[n][i]).setSymbol('T');
+				(map[n][i]).setColor(COLOR_GREEN);
+			}
+			else if ((map[n][i]).getHeight() >= 40){
+				(map[n][i]).setSymbol('M');
+				(map[n][i]).setColor(COLOR_WHITE);
+			}
+		}
+	}
+
+	/*
+	*Old method
 	int area = x * y;
 	int dArea = area / 5;
 	TreeSpawn();
+	*/
+	
 
 }
 // makes tree locations
