@@ -1,6 +1,8 @@
 #include "WorldMap.h"
 #include <windows.h>
 #include <iostream>
+#include <vector>
+
 // #include "getInput.h"
 #include "PDcurses/curses.h"
 
@@ -29,24 +31,26 @@ void WorldMap::makeMap(int newX, int newY){
 	y = newY;
 	int n, count, i;
 	count = 0;
-
 	map.clear();
-	SectorMap temp;
-	for (n = 1; n <= y; n++){
-		for (i = 1; i <= x; i++){
+	SectorMap tempSector;
+	for (n = 0; n <= y; n++){
+		vector<SectorMap> tempVect;
+		map.push_back(tempVect);
+		for (i = 0; i <= x; i++){
 			// CURRENTLY WORKING HEREEEEEE!!!!!
-			temp = SectorMap('P', COLOR_YELLOW, 0);
-			map.push_back(temp);
-			cout << (map[(n * i) - 1]).getColor() << " " << (map[(n * i) - 1]).getSymbol() << "n: " << n << "i: " << i << endl;
+			tempSector = SectorMap('P', COLOR_YELLOW, 0);
+			(map[n]).push_back(tempSector);
+			cout << (map[n][i]).getColor() << " " << (map[n][i]).getSymbol() << " n: " << n << "i: " << i << endl;
 		}
+		// map.push_back(tempVect);
 	}
-	for (int i = 0; i <= ((x*y) / HEIGHT_MAX_POINTS); i++){
+	for (int i = 0; i <= ((x*y) * HEIGHT_MAX_POINTS); i++){
 		int locationX = rand() % (x);
 		int locationY = rand() % (y);
 		cout << "i chose " << locationX << ", " << locationY << endl;
-		int newHeight = (map[locationX*locationY]).getHeight() + 1;
-		(map[locationX*locationY]).setHeight(newHeight);
-		TrickelDown(locationX, locationY, 0, newHeight - 1);
+		int newHeight = (map[locationY][locationX]).getHeight() + 10;
+		(map[locationY][locationX]).setHeight(newHeight);
+		TrickelDown(locationX, locationY, 0, newHeight - 10);
 		clear();
 		viewHeightMapNoInput();
 
@@ -67,35 +71,35 @@ void WorldMap::TrickelDown(int connX, int connY, int distance, int orgHeight){
 	*/
 	
 
-	if (((connY + 1) < y) && ((map[(connX + 0)*(connY + 1)]).getHeight() < (orgHeight - 1))){
+	if (((connY + 1) < y) && ((map[connY + 1][connX + 0]).getHeight() < (orgHeight - 19))){
 		validsX.push_back((connX + 0));
 		validsY.push_back((connY + 1));
 	}
-	if ((((connY + 1) < y) && ((connX + 1) < x)) && ((map[(connX + 1)*(connY + 1)]).getHeight() < (orgHeight - 1))){
+	if ((((connY + 1) < y) && ((connX + 1) < x)) && ((map[connY + 1][connX + 1]).getHeight() < (orgHeight - 19))){
 		validsX.push_back((connX + 1));
 		validsY.push_back((connY + 1));
 	}
-	if (((connX + 1) < x) && ((map[(connX + 1)*(connY + 0)]).getHeight() < (orgHeight - 1))){
+	if (((connX + 1) < x) && ((map[connY + 0][connX + 1]).getHeight() < (orgHeight - 19))){
 		validsX.push_back((connX + 1));
 		validsY.push_back((connY + 0));
 	}
-	if ((((connY - 1) >= 0) && ((connX + 1) <=x)) && ((map[(connX + 1)*(connY - 1)]).getHeight() < (orgHeight - 1))){
+	if ((((connY - 1) >= 0) && ((connX + 1) <= x)) && ((map[connY - 1][connX + 1]).getHeight() < (orgHeight - 19))){
 		validsX.push_back((connX + 1));
 		validsY.push_back((connY - 1));
 	}
-	if ((((connY - 1) >= 0) && (map[(connX + 0)*(connY - 1)]).getHeight() < (orgHeight - 1))){
+	if ((((connY - 1) >= 0) && (map[connY - 1][connX + 0]).getHeight() < (orgHeight - 19))){
 		validsX.push_back((connX + 0));
 		validsY.push_back((connY - 1));
 	}
-	if ((((connY - 1) >= 0) && ((connX - 1) >= 0)) && (map[(connX - 1)*(connY - 1)]).getHeight() < (orgHeight - 1)){
+	if ((((connY - 1) >= 0) && ((connX - 1) >= 0)) && (map[connY - 1][connX - 1]).getHeight() < (orgHeight - 9)){
 		validsX.push_back((connX - 1));
 		validsY.push_back((connY - 1));
 	}
-	if ((((connX - 1) >= 0) && (map[(connX - 1)*(connY + 0)]).getHeight() < (orgHeight - 1))){
+	if ((((connX - 1) >= 0) && (map[connY + 0][connX - 1]).getHeight() < (orgHeight - 19))){
 		validsX.push_back((connX - 1));
 		validsY.push_back((connY + 0));
 	}
-	if ((((connY + 1) < y) && ((connX - 1) >= 0)) && (map[(connX - 1)*(connY + 1)]).getHeight() < (orgHeight - 1)){
+	if ((((connY + 1) < y) && ((connX - 1) >= 0)) && (map[connY + 1][connX - 1]).getHeight() < (orgHeight - 19)){
 		validsX.push_back((connX - 1));
 		validsY.push_back((connY + 1));
 	}
@@ -106,11 +110,11 @@ void WorldMap::TrickelDown(int connX, int connY, int distance, int orgHeight){
 		int scatter = rand() % validsX.size();  //0-7
 		int randXpos = validsX[scatter];
 		int randYpos = validsY[scatter];
-		int newHeight = (map[randXpos*randYpos]).getHeight() + 1;
-		(map[randXpos*randYpos]).setHeight(newHeight);
-		(map[connX*connY]).setHeight(orgHeight);
+		int newHeight = (map[randYpos][randXpos]).getHeight() + 10;
+		(map[randYpos][randXpos]).setHeight(newHeight);
+		(map[connY][connX]).setHeight(orgHeight);
 		if (distance <= HEIGHT_CHECK_DISTANCE){
-			TrickelDown(randXpos, randYpos, distance + 1, newHeight - 1);
+			TrickelDown(randXpos, randYpos, distance + 1, newHeight - 10);
 		}
 	}
 	
@@ -138,10 +142,10 @@ void WorldMap::viewHeightMap() {
 void WorldMap::viewHeightMapNoInput(){
 	int n, i;
 	printw("This is your map\n");
-	for (n = 1; (n <= DYM_Y) && (n <= y); n++){
-		for (i = 1; (i <= DYM_X) && (i <= x); i++){
-			color_set((map[(n * i) - 1]).getColor(), NULL);
-			char output = (char)((map[(n * i) - 1]).getHeight() + 48);
+	for (n = 0; (n <= DYM_Y) && (n <= y); n++){
+		for (i = 0; (i <= DYM_X) && (i <= x); i++){
+			color_set((map[n][i]).getColor(), NULL);
+			char output = (char)(((map[n][i]).getHeight() / 10) + 48);
 			addch(output);
 			color_set(COLOR_WHITE, NULL);
 		}
@@ -156,10 +160,10 @@ void WorldMap::viewHeightMapNoInput(){
 void WorldMap::viewHeightMapStatic() {
 	int n, i;
 	cout << "This is your map\n";
-	for (n = 1; n <= x; n++){
-		for (i = 1; i <= y; i++){
-			color_set((map[(n * i) - 1]).getColor(), NULL);
-			char output = (char)((map[(n * i) - 1]).getHeight() + 48);
+	for (n = 0; n <= y; n++){
+		for (i = 0; i <= x; i++){
+			color_set((map[n][i]).getColor(), NULL);
+			char output = (char)(((map[n][i]).getHeight() / 10) + 48);
 			addch(output);
 			color_set(COLOR_WHITE, NULL);
 		}
@@ -177,18 +181,21 @@ void WorldMap::viewHeightMapStatic() {
 void WorldMap::viewHeightMapDynamic(int finX, int finY) {
 	clear();
 	printw("This is your map\n");
-	int orgY = 1, orgX = 1;
-	if (finY > DYM_Y){
-		orgY = finY - (DYM_Y - 1);
+	int orgY = 0, orgX = 0;
+	
+	if (finY >= DYM_Y){
+		orgY = finY - (DYM_Y);
 	}
-	if (finX > DYM_X){
-		orgX = finX - (DYM_X - 1);
+	if (finX >= DYM_X){
+		orgX = finX - (DYM_X);
 	}
+
+	
 
 	for (int n = orgY; n <= finY; n++){
 		for (int i = orgX; i <= finX; i++){
-			color_set((map[(n * i) - 1]).getColor(), NULL);
-			char output = (char)((map[(n * i) - 1]).getHeight() + 48);
+			color_set((map[n][i]).getColor(), NULL);
+			char output = (char)(((map[n][i]).getHeight() / 10) + 48);
 			addch(output);
 			color_set(COLOR_WHITE, NULL);
 		}
@@ -251,10 +258,10 @@ void WorldMap::viewMap() {
 void WorldMap::viewMapNoInput(){
 	int n, i;
 	printw("This is your map\n");
-	for (n = 1; (n <= DYM_Y) && (n <= y); n++){
-		for (i = 1; (i <= DYM_X) && (i <= x); i++){
-			color_set((map[(n * i) - 1]).getColor(), NULL);
-			addch((map[(n * i) - 1]).getSymbol());
+	for (n = 0; (n <= DYM_Y) && (n <= y); n++){
+		for (i = 0; (i <= DYM_X) && (i <= x); i++){
+			color_set((map[n][i]).getColor(), NULL);
+			addch((map[n][i]).getSymbol());
 			color_set(COLOR_WHITE, NULL);
 		}
 		printw("\n");
@@ -269,10 +276,10 @@ void WorldMap::viewMapNoInput(){
 void WorldMap::viewMapStatic() {
 	int n, i;
 	cout << "This is your map\n";
-	for (n = 1; n <= x; n++){
-		for (i = 1; i <= y; i++){
-			color_set((map[(n * i) - 1]).getColor(), NULL);
-			addch((map[(n * i) - 1]).getSymbol());
+	for (n = 0; n <= y; n++){
+		for (i = 0; i <= x; i++){
+			color_set((map[n][i]).getColor(), NULL);
+			addch((map[n][i]).getSymbol());
 			color_set(COLOR_WHITE, NULL);
 		}
 		printw("\n");
@@ -289,7 +296,7 @@ void WorldMap::viewMapStatic() {
 void WorldMap::viewMapDynamic(int finX, int finY) {
 	clear();
 	printw("This is your map\n");
-	int orgY = 1, orgX = 1;
+	int orgY = 0, orgX = 0;
 	if (finY > DYM_Y){
 		orgY = finY - (DYM_Y - 1);
 	}
@@ -299,8 +306,8 @@ void WorldMap::viewMapDynamic(int finX, int finY) {
 
 	for (int n = orgY; n <= finY; n++){
 		for (int i = orgX; i <= finX; i++){
-			color_set((map[(n * i) - 1]).getColor(), NULL);
-			addch((map[(n * i) - 1]).getSymbol());
+			color_set((map[n][i]).getColor(), NULL);
+			addch((map[n][i]).getSymbol());
 			color_set(COLOR_WHITE, NULL);
 		}
 		printw("\n");
@@ -311,7 +318,7 @@ void WorldMap::viewMapDynamic(int finX, int finY) {
 	refresh();
 	int keyInput = getch();
 	if (keyInput == KEY_UP){
-		if (finY - DYM_Y > 0)
+		if (finY - DYM_Y >= 0)
 			viewMapDynamic(finX, finY - 1);
 		else
 			viewMapDynamic(finX, finY);
@@ -329,7 +336,7 @@ void WorldMap::viewMapDynamic(int finX, int finY) {
 			viewMapDynamic(finX, finY);
 	}
 	else if (keyInput == KEY_LEFT){
-		if (finX - DYM_X > 0)
+		if (finX - DYM_X >= 0)
 			viewMapDynamic(finX - 1, finY);
 		else
 			viewMapDynamic(finX, finY);
@@ -351,8 +358,8 @@ void WorldMap::TreeSpawn(){
 	int tArea = area / 4;
 	int count = 0;
 
-	for (int n = 1; n <= y; n++){
-		for (int i = 1; i <= x; i++){
+	for (int n = 0; n <= y; n++){
+		for (int i = 0; i <= x; i++){
 			// cout << "position " << n << i << endl;
 			int seed = rand() % 100 + 1;
 			// cout << "seed " << seed << endl;
@@ -373,7 +380,7 @@ void WorldMap::TreeSpawn(){
 			}
 
 			if (seed > 80){
-				TreeRec(n, i, 0);
+				TreeRec(i, n, 0);
 			}
 
 			tArea = (area / 4) - CountTrees();
@@ -411,7 +418,7 @@ void WorldMap::TreeSpawn(int currentX, int currentY){
 	}
 
 	if (seed > 80){
-		TreeRec(currentY, currentX, 0);
+		TreeRec(currentX, currentY, 0);
 	}
 	if (seed > 40){
 		if ((currentX - 1) >= 0)
@@ -469,16 +476,16 @@ void WorldMap::TreeRec(int indI, int indN, int startDist){
 		// cout << "position " << indI*indN << endl;
 		// cout << "distance " << startDist << endl;
 		// cout << "position " << indI << indN << endl;
-		(map[(indI * indN) - 1]).setSymbol('T');
-		(map[(indI * indN) - 1]).setColor(COLOR_GREEN);
+		(map[indN][indI]).setSymbol('T');
+		(map[indN][indI]).setColor(COLOR_GREEN);
 		clear();
 		viewMapNoInput();
 		// cout << "done" << endl;
-		if ((indI - 1) > 0)
+		if ((indI - 1) >= 0)
 			TreeRec(indI - 1, indN, startDist + 1);
 		if ((indI + 2) <= x)
 			TreeRec(indI + 1, indN, startDist + 1);
-		if ((indN - 1) > 0)
+		if ((indN - 1) >= 0)
 			TreeRec(indI, indN - 1, startDist + 1);
 		if ((indN + 2) <= y)
 			TreeRec(indI, indN + 1, startDist + 1);
@@ -489,9 +496,9 @@ void WorldMap::TreeRec(int indI, int indN, int startDist){
 // this counts how many trees are on the map
 int WorldMap::CountTrees(){
 	int n, i, count = 0;
-	for (n = 1; n <= x; n++){
-		for (i = 1; i <= y; i++){
-			if (((map)[(n - 1)*(i - 1)]).getSymbol() == 'T'){
+	for (n = 0; n <= x; n++){
+		for (i = 0; i <= y; i++){
+			if (((map)[n][i]).getSymbol() == 'T'){
 				// cout << "tree at " << map[(n - 1)*(i - 1)] << endl;
 				count++;
 			}

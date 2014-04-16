@@ -9,7 +9,7 @@ const int TREE_LIMIT_SMALL = 4;
 const int TREE_LIMIT_MED = 18;
 const int DYM_X = 70;
 const int DYM_Y = 30;
-const int HEIGHT_MAX_POINTS = 3;
+const int HEIGHT_MAX_POINTS = 2;
 const int HEIGHT_CHECK_DISTANCE = 3;
 
 // WorldMap Class
@@ -17,8 +17,8 @@ class WorldMap {
 public:
 	int getXPos();
 	int getYPos();
-	// vector<vector<SectorMap>> getMapVector();
-	vector<SectorMap> getMapVector();
+	vector<vector<SectorMap>> getMapVector();
+	//vector<SectorMap> getMapVector();
 	void makeMap(int newX, int newY);
 	void viewMap();
 	void TrickelDown(int x, int y, int distance, int orgHeight);
@@ -38,8 +38,8 @@ private:
 	void TreeRec(int indI, int indN, int startDist);
 	int x;
 	int y;
-	// vector<vector<SectorMap>> map;
-	vector<SectorMap> map;
+	vector<vector<SectorMap>> map;
+	// vector<SectorMap> map;
 };
 
 
