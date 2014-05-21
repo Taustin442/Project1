@@ -87,6 +87,7 @@
     <ClInclude Include="Square.h" />
     <ClInclude Include="Clock.h" />
     <ClInclude Include="Symbol.h" />
+    <ClInclude Include="Tile.h" />
     <ClInclude Include="WorldMap.h" />
     <ClInclude Include="Wound.h" />
   </ItemGroup>

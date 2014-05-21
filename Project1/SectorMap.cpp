@@ -30,6 +30,7 @@ int SectorMap::getColor(){
 int SectorMap::getHeight(){
 	return m_Height;
 }
+
 void SectorMap::setHeight(int height){
 	m_Height = height;
 }

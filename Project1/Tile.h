@@ -1,19 +1,15 @@
-#ifndef SECTORMAP_H
-#define SECTORMAP_H
+#ifndef TILE_H
+#define TILE_H
 
 #include <vector>
 #include "Symbol.h"
-#include "Tile.h"
-
-const int MAP_SIZE_X = 100;
-const int MAP_SIZE_Y = 100;
 
 
-class SectorMap {
+class Tile {
 public:
-	SectorMap();
-	SectorMap(char symbol, int color, int height);
-	~SectorMap();
+	Tile();
+	Tile(char symbol, int color, int height);
+	~Tile();
 	void DisplaySymbol();
 	char getSymbol();
 	int getColor();
@@ -27,7 +23,6 @@ private:
 	int m_YSize;
 	int m_Height;
 	Symbol m_Symbol;
-	// vector<vector<Tile>> map;
 };
 
 
